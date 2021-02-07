@@ -9,6 +9,7 @@
       var ctx = document.getElementById('ctx').getContext('2d');
       var WIDTH = 500;
       var HEIGHT = 500;
+      var numOfEnemies,enemyList;
       ctx.font = '20px Calibri';
 
       var ball = {
@@ -18,7 +19,7 @@
         color:'blue',
         spdX:-5,
         spdY:-5
-      }
+      };
 
       var base = {
         x:0,
@@ -28,7 +29,12 @@
         color:'red',
         pressingLeft:false,
         pressingRight:false
-      }
+      };
+
+      var enemy = {
+        height:20,
+        width:40
+      };
 
       document.onkeydown = function(event) {
         if (event.keyCode == 37) {
@@ -116,6 +122,19 @@
         base.x = 150;
         ball.x = base.x + 100;
         ball.y = base.y - 100;
+        numOfEnemies = 0;
+        var enemyX = 5;
+        var enemyY = 5;
+        enemyList = []; //5+40 = 45
+        for (var i=1;i<=6;i++) {
+          enemyX = 5;
+          for(var j=1;j<=11;j++) {
+            enemyList[numOfEnemies] = {x:enemyX,enemyY};
+            numOfEnemies++;
+            enemyX += 45;
+          }
+          enemyY += 25;
+        }
         setInterval(update,20);
       }
 
