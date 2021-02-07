@@ -9,7 +9,7 @@
       var ctx = document.getElementById('ctx').getContext('2d');
       var WIDTH = 500;
       var HEIGHT = 500;
-      var numOfEnemies,enemyList,score;
+      var numOfEnemies,enemyList,score,intervalVar;
       ctx.font = '20px Calibri';
 
       var ball = {
@@ -125,6 +125,13 @@
         }
       }
 
+      isGameOver = function() {
+        if (base.lives < 0 || score == 330) {
+          clearInterval(intervalVar);
+          ctx.fillText('Game Over! Click to restart',150,250);
+        }
+      }
+
       update = function() {
         ctx.clearRect(0,0,WIDTH,HEIGHT);
         enemyList.forEach(drawEnemy);
@@ -145,6 +152,7 @@
 
         ctx.fillText("Score: "+score,5,490);
         ctx.fillText("Lives: "+base.lives,430,490);
+        isGameOver();
         updateBarPosition();
         updateBallPosition();
       }
@@ -167,7 +175,7 @@
           }
           enemyY += 25;
         }
-        setInterval(update,20);
+        intervalVar = setInterval(update,20);
       }
 
       startGame();
