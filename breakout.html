@@ -33,7 +33,8 @@
 
       var enemy = {
         height:20,
-        width:40
+        width:40,
+        color:'orange'
       };
 
       document.onkeydown = function(event) {
@@ -79,6 +80,13 @@
         ctx.restore();
       }
 
+      drawEnemy = function(e,i) {
+        ctx.save();
+        ctx.fillStyle = enemy.color;
+        ctx.fillRect(e.x,e.y,enemy.width,enemy.height);
+        ctx.restore();
+      }
+
       updateBarPosition = function() {
         if (base.pressingLeft) {
           base.x = base.x - 5;
@@ -107,6 +115,7 @@
 
       update = function() {
         ctx.clearRect(0,0,WIDTH,HEIGHT);
+        enemyList.forEach(drawEnemy);
         drawBall();
         drawBase();
 
@@ -129,7 +138,7 @@
         for (var i=1;i<=6;i++) {
           enemyX = 5;
           for(var j=1;j<=11;j++) {
-            enemyList[numOfEnemies] = {x:enemyX,enemyY};
+            enemyList[numOfEnemies] = {x:enemyX,y:enemyY};
             numOfEnemies++;
             enemyX += 45;
           }
