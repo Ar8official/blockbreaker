@@ -9,7 +9,7 @@
       var ctx = document.getElementById('ctx').getContext('2d');
       var WIDTH = 500;
       var HEIGHT = 500;
-      var numOfEnemies,enemyList;
+      var numOfEnemies,enemyList,score;
       ctx.font = '20px Calibri';
 
       var ball = {
@@ -28,7 +28,8 @@
         width:100,
         color:'red',
         pressingLeft:false,
-        pressingRight:false
+        pressingRight:false,
+        lives:3
       };
 
       var enemy = {
@@ -115,8 +116,12 @@
         if (ball.x > WIDTH || ball.x < 0) {
           ball.spdX = -ball.spdX;
         }
-        if (ball.y > HEIGHT || ball.y < 0) {
+        if (ball.y < 0) {
           ball.spdY = -ball.spdY;
+        }
+        if (ball.y > HEIGHT ) {
+          ball.spdY = -ball.spdY;
+          base.lives--;
         }
       }
 
@@ -134,9 +139,12 @@
           if (testCollisionEnemy(enemyList[key],ball)) {
             delete enemyList[key];
             ball.spdY = -ball.spdY;
+            score += 5;
           }
         }
 
+        ctx.fillText("Score: "+score,5,490);
+        ctx.fillText("Lives: "+base.lives,430,490);
         updateBarPosition();
         updateBallPosition();
       }
@@ -148,6 +156,7 @@
         numOfEnemies = 0;
         var enemyX = 5;
         var enemyY = 5;
+        score = 0;
         enemyList = []; //5+40 = 45
         for (var i=1;i<=6;i++) {
           enemyX = 5;
