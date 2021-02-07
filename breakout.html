@@ -64,6 +64,13 @@
                 (ball.y < base.y + base.height));
       }
 
+      testCollisionEnemy = function(e,ball) {
+        return ((e.x < ball.x + ball.radius) &&
+                (ball.x < e.x + enemy.width) &&
+                (e.y < ball.y + ball.radius) &&
+                (ball.y < e.y + enemy.height));
+      }
+
       drawBall = function() {
         ctx.save();
         ctx.fillStyle = ball.color;
@@ -121,6 +128,13 @@
 
         if (testCollision(base,ball)) {
           ball.spdY = -ball.spdY;
+        }
+
+        for (key in enemyList) {
+          if (testCollisionEnemy(enemyList[key],ball)) {
+            delete enemyList[key];
+            ball.spdY = -ball.spdY;
+          }
         }
 
         updateBarPosition();
